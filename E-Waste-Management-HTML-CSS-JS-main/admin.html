@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: coral;
+        text-align: center; /* add this to center the image */
+    }
+
+    h1{
+        text-align: center;
+        background-color: darkkhaki;
+        color: brown;
+    }
+
+    #navbar {
+        background-color: #f1f1f1;
+        padding: 10px;
+        overflow: hidden;
+        text-align: center; 
+    }
+
+    #navbar a {
+        display: inline-block; 
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        border-radius: 4px; 
+        transition: background-color 0.2s ease; 
+    }
+
+    #navbar a:hover {
+        background-color: #daa412;
+        color: black;
+        transform: translateY(-2px); /* added hover effect */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* added box-shadow */
+    }
+
+    #navbar a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #content {
+        padding: 20px;
+        text-align: center; /* added text-align center */
+    }
+
+    #manage-products {
+        margin-top: 20px;
+    }
+
+    #manage-products ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #manage-products li {
+        margin-bottom: 10px;
+    }
+
+    #manage-products input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    #show-checkbox-table {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px; /* added border-radius */
+    }
+
+    #show-checkbox-table:hover {
+        background-color: #3e8e41;
+        transform: translateY(-2px); /* added hover effect */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* added box-shadow */
+    }
+
+    #checkbox-table-container {
+        display: none;
+        margin-top: 20px;
+    }
+
+    #checkbox-table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #checkbox-table-container th, #checkbox-table-container td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    #checkbox-table-container th {
+        background-color: #f7f7f7;
+    }
+
+    /* add this to center the image */
+    .centered-image {
+        display: block;
+        margin: 0 auto;
+        height: 400px;
+        width: 800px;
+    }
+</style>
+<body>
+    <h1>Admin Dashboard</h1>
+    <div id="navbar">
+        <a href="./payment.html" id="payments">Payment List</a>
+        <a href="./contactus.html" id="contactus">Contact Us</a>
+        <a href="./order.html" id="order">Order Status</a>
+        <a href="#" id="manage">Manage Products</a>
+    </div>
+    <div id="content">
+        <!-- add the image here -->
+        <img src="./e.jpg" alt="Centered Image" class="centered-image">
+    </div>
+
+    <script>
+        document.getElementById('manage').addEventListener('click', function() {
+            document.getElementById('content').innerHTML = `
+                <h2>Manage Products</h2>
+                <input type="search" id="search-input" placeholder="Search e-waste products...">
+                <ul id="manage-products">
+                    <li id="cpu"> CPU</li>
+                    <li id="monitor"> Monitor</li>
+                    <li id="keyboard"> Keyboard</li>
+                    <li id="mouse"> Mouse</li>
+                    <li id="printer"> Printer</li>
+                    <li id="battery"> Battery</li>
+                </ul>
+                <button id="show-product-info">Show Product Info</button>
+                <div id="product-info-container" style="display: none;">
+                    <!-- product info will be displayed here -->
+                </div>
+            `;
+
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const products = document.querySelectorAll('#manage-products li');
+                products.forEach(function(product) {
+                    const productName = product.textContent.toLowerCase();
+                    if (productName.includes(searchTerm)) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+
+            document.getElementById('show-product-info').addEventListener('click', function() {
+                const selectedProduct = document.querySelector('#manage-products li[style*="block"]');
+                if (!selectedProduct) {
+                    alert("Please select a product.");
+                    return;
+                }
+
+                // Display product information
+                const productInfoContainer = document.getElementById('product-info-container');
+                productInfoContainer.style.display = 'block';
+
+                switch (selectedProduct.id) {
+                    case 'cpu':
+                        productInfoContainer.innerHTML = `
+                            <h2>CPU</h2>
+                            <p>Recycling Programs</p>
+                            <p>Many electronic manufacturers and retailers offer recycling programs where you can drop off old CPUs. They are then dismantled, and valuable materials like metals and plastics are recovered for reuse.</p>
+                        `;
+                        break;
+                    case 'monitor':
+                        productInfoContainer.innerHTML = `
+                            <h2>Monitor</h2>
+                            <p>Local E-Waste Recycling Events</p>
+                            <p>Some monitor manufacturers have take-back programs where you can return your old monitor for proper disposal or recycling.</p>
+                            
+                        `;
+                        break;
+                    case 'keyboard':
+                        productInfoContainer.innerHTML = `
+                            <h2>Keyboard</h2>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        `;
+                        break;
+                    case 'mouse':
+                        productInfoContainer.innerHTML = `
+                            <h2>Mouse</h2>
+                            <p>E-Waste Collection Centers</p>
+                            <p>Take your old keyboard to an e-waste collection center. These centers recycle the plastic and metal components of the keyboard</p>
+                           
+                        `;
+                        break;
+                    case 'printer':
+                        productInfoContainer.innerHTML = `
+                            <h2>Printer</h2>
+                            <p>Store Drop-Off</p>
+                            <p>Some electronics stores have drop-off points for small peripherals like mice, where they are collected for recycling</p>
+                            
+                        `;
+                        break;
+                    case 'battery':
+                        productInfoContainer.innerHTML = `
+                            <h2>Battery</h2>
+                            <p>Specialized Battery Recyclers</p>
+                            <p>Take your batteries to specialized battery recycling centers. They safely handle and recycle different types of batteries, including lithium-ion and alkaline</p>
+                           
+                        `;
+                        break;
+                    default:
+                        productInfoContainer.innerHTML = `
+                            <h2>Product Not Found</h2>
+                            <p>Please select a valid product.</p>
+                        `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
